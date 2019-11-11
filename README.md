@@ -79,4 +79,6 @@
  * commit your changes to git
  * push your branch to remote using `git push -u origin game-messages`
  
- 
+## Part 3: Put all together
+ 1. Discussing each implementation, merging changes
+ 2. Discussion of workshop, what goes well and what is not
