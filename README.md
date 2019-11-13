@@ -1,5 +1,7 @@
 # CPPQT-Practice-MazeGame
 
+![Maze game UI](https://raw.githubusercontent.com/PLLUG/CPPQT-Practice-MazeGame/master/maze-game-ui.png)
+
 ## Prerequisites
  * Read chapters 01-02 of CPPQT Roadmap Book: [https://pllug.gitlab.io/cppqt/cppqt-roadmap-book](https://pllug.gitlab.io/cppqt/cppqt-roadmap-book)
  * Installed MSYS2_Commander: [https://github.com/PLLUG/CPPQT-MSYS2-Cmder/releases/download/2019-11/MSYS2_Commander-2019-11.7z](https://github.com/PLLUG/CPPQT-MSYS2-Cmder/releases/download/2019-11/MSYS2_Commander-2019-11.7z)
