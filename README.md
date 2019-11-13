@@ -28,8 +28,8 @@
  * clone git repo
  * create branch `key-to-exit` using command `git checkout -b key-to-exit`
  * add call to `placeCharRandomly()` function from `random-utils.h` to place a key on a map
- * create variable that indicate that key was found by character
- * make exit end the game only if key was found
+ * create variable that indicate that key was found by player
+ * make exit end the game only if key was found, otherwise exit should behave like a wall 
  * commit your changes to git
  * push your branch to remote using `git push -u origin key-to-exit`
  
