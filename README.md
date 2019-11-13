@@ -2,12 +2,13 @@
 
 ## Prerequisites
  * Read chapters 01-02 of CPPQT Roadmap Book: [https://pllug.gitlab.io/cppqt/cppqt-roadmap-book](https://pllug.gitlab.io/cppqt/cppqt-roadmap-book)
- * Installed MSYS2_Commander: [https://github.com/PLLUG/CPPQT-MSYS2-Cmder/releases/download/2019-10/MSYS2_Commander-2019-10.7z](https://github.com/PLLUG/CPPQT-MSYS2-Cmder/releases/download/2019-10/MSYS2_Commander-2019-10.7z)
+ * Installed MSYS2_Commander: [https://github.com/PLLUG/CPPQT-MSYS2-Cmder/releases/download/2019-11/MSYS2_Commander-2019-11.7z](https://github.com/PLLUG/CPPQT-MSYS2-Cmder/releases/download/2019-11/MSYS2_Commander-2019-11.7z)
  * In MSYS2_Commander `install-dev-env` and `install-qt5-env` commands are done.
  
 ## Part 1: Preparing for work
- 1. Run and configure QtCreator to work with clang compiler. Set necessary editor options.
- 2. Clone repository, open project, compile and run.
+ 1. Run QtCreator.
+ 2. Clone repository, add maze sources, create and open project for maze sources, compile and run.
+ 2. Install `mingw-w64-x86_64-pdcurses` library.
  3. Link `pdcurses` library, link aditional libraries for practice (`libs\libmazify.a`, `libs\libcurses-helper-utils`).
  4. Draw map using `pdcurses` lib.
  5. Forming teams, assigning tasks.
