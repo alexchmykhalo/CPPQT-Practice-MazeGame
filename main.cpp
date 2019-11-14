@@ -9,6 +9,8 @@
 
 #include "curses-helper-utils.h"
 
+bool isPlayerTakeKey = false;
+
 // Checks if user want so play
 // Return true if user wants to play; false otherwise
 bool doesUserWantsToPlay()
@@ -60,6 +62,9 @@ void generateMaze(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
     // Place character
     placeCharRandomly(prMaze, characterSymbol, 1);
     placeCharRandomly(prMaze, exitSymbol, 1);
+    placeCharRandomly(prMaze, keySymbol, 1);
+
+
 }
 
 // Moves character according to given command and retuns eaten symbol (if any)
@@ -82,7 +87,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row][column - 1];
 
-        if (rCharMovedOnto != wallSymbol)
+        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
         {
             column--;
         }
@@ -92,7 +97,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row][column + 1];
 
-        if (rCharMovedOnto != wallSymbol)
+        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
         {
             column++;
         }
@@ -102,7 +107,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row - 1][column];
 
-        if (rCharMovedOnto != wallSymbol)
+        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
         {
             row--;
         }
@@ -112,7 +117,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row + 1][column];
 
-        if (rCharMovedOnto != wallSymbol)
+        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
         {
             row++;
         }
@@ -138,7 +143,6 @@ void gameMessage(const std::string& message)
 bool moveCharacterAndCheckIfExitFound(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
 {
     bool rExitFound = false;
-
     int charRow = 1;
     int charColumn = 1;
     if (scanForChar(prMaze, characterSymbol, charRow, charColumn))
@@ -153,13 +157,22 @@ bool moveCharacterAndCheckIfExitFound(std::array<std::array<char, mazeColumns>, 
         {
             gameMessage("Cannot move here!");
         }
-
-        if (charMovedOnto == exitSymbol)
+        if(charMovedOnto == exitSymbol && isPlayerTakeKey == false)
+        {
+            gameMessage("Find a key");
+        }
+        if (isPlayerTakeKey == true && charMovedOnto == exitSymbol)
         {
             gameMessage("Exit found!");
             rExitFound = true;
         }
+
+        if(charMovedOnto == keySymbol)
+        {
+            isPlayerTakeKey = true;
+        }
     }
+
     else
     {
         gameMessage("Error: cannot find char!");
