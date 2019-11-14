@@ -9,8 +9,124 @@
 
 #include "curses-helper-utils.h"
 
+#include "random-utils.h"
+
 // Checks if user want so play
 // Return true if user wants to play; false otherwise
+
+//------------------------------
+void generateWallsInside(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
+{
+    const int down{1};
+    const int right{2};
+
+    int mazeSize{0};
+
+    if(mazeRows % 2 == 0)
+    {
+        mazeSize = 2;
+    }
+    else
+    {
+        mazeSize = 1;
+    }
+
+    for(size_t row{1}; row < (mazeRows - 1); ++row)
+    {
+        for(size_t column{1}; column < (mazeColumns - 1); ++column)
+        {
+            if((row % 2 != 0) && (column % 2 != 0))
+            {
+                prMaze[row][column] = emptySymbol;
+
+                if((column == (mazeColumns - (mazeSize + 1))) && (row == (mazeRows - (mazeSize + 1))))
+                {
+                    prMaze[row][column] = emptySymbol;
+                }
+                else if((column == (mazeColumns - (mazeSize + 1))) && ((row + 2) < (mazeRows - mazeSize)))
+                {
+                    prMaze[row + 1][column] = emptySymbol;
+                    prMaze[row + 2][column] = emptySymbol;
+                }
+                else if((row == (mazeRows - (mazeSize + 1))) && ((column + 2) < (mazeColumns - mazeSize)))
+                {
+                    prMaze[row][column + 1] = emptySymbol;
+                    prMaze[row][column + 2] = emptySymbol;
+                }
+                else
+                {
+                    int whereToGo = generateRandomNumber(down, right);
+
+                    if(whereToGo == down)
+                    {
+                        if((row + 2) < (mazeRows - mazeSize))
+                        {
+                            prMaze[row + 1][column] = emptySymbol;
+                            prMaze[row + 2][column] = emptySymbol;
+                        }
+                    }
+                    else if(whereToGo == right)
+                    {
+                        if((column + 2) < (mazeColumns - mazeSize))
+                        {
+                            prMaze[row][column + 1] = emptySymbol;
+                            prMaze[row][column + 2] = emptySymbol;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void placeExit(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
+{
+    int randomRow = generateRandomNumber(1, (mazeRows - 2));
+    while(randomRow % 2 == 0)
+    {
+        randomRow = generateRandomNumber(1, (mazeRows - 2));
+    }
+
+    int randomColumn = generateRandomNumber(1, (mazeRows - 2));
+    while(randomColumn % 2 == 0)
+    {
+        randomColumn = generateRandomNumber(1, (mazeRows - 2));
+    }
+
+    int counterOfWalls{0};
+
+    if(((randomColumn + 1) < mazeColumns) && (prMaze[randomRow][randomColumn + 1] == wallSymbol))
+    {
+        ++counterOfWalls;
+    }
+
+    if(((randomColumn - 1) > 0) && (prMaze[randomRow][randomColumn - 1] == wallSymbol))
+    {
+        ++counterOfWalls;
+    }
+
+    if (((randomRow + 1) < mazeRows) && (prMaze[randomRow + 1][randomColumn] == wallSymbol))
+    {
+        ++counterOfWalls;
+    }
+
+    if (((randomRow - 1) > 0) && (prMaze[randomRow - 1][randomColumn] == wallSymbol))
+    {
+        ++counterOfWalls;
+    }
+
+    if(counterOfWalls == 3)
+    {
+        prMaze[randomRow][randomColumn] = exitSymbol;
+        return;
+    }
+    else
+    {
+        placeExit(prMaze);
+    }
+}
+//-------------------------------
+
 bool doesUserWantsToPlay()
 {
     bool rResult = false;
@@ -46,20 +162,16 @@ void generateMaze(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
     {
         for (int column = 0; column < mazeColumns; column++)
         {
-            if ((row == 0) || (row == mazeRows - 1) || (column == 0) || (column == mazeColumns - 1))
-            {
-                prMaze[row][column] = wallSymbol;
-            }
-            else
-            {
-                prMaze[row][column] = emptySymbol;
-            }
+            prMaze[row][column] = wallSymbol;
         }
     }
 
+    //Walls generation
+    generateWallsInside(prMaze);
+    placeExit(prMaze);
+
     // Place character
     placeCharRandomly(prMaze, characterSymbol, 1);
-    placeCharRandomly(prMaze, exitSymbol, 1);
 }
 
 // Moves character according to given command and retuns eaten symbol (if any)
