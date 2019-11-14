@@ -200,7 +200,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row][column - 1];
 
-        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
+        if (rCharMovedOnto != wallSymbol /*&& isPlayerTakeKey*/)
         {
             column--;
         }
@@ -210,7 +210,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row][column + 1];
 
-        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
+        if (rCharMovedOnto != wallSymbol /*&& isPlayerTakeKey*/)
         {
             column++;
         }
@@ -220,7 +220,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row - 1][column];
 
-        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
+        if (rCharMovedOnto != wallSymbol /*&& isPlayerTakeKey*/)
         {
             row--;
         }
@@ -230,7 +230,7 @@ char moveAndGather(int row,
     {
         rCharMovedOnto = prMaze[row + 1][column];
 
-        if (rCharMovedOnto != wallSymbol && isPlayerTakeKey)
+        if (rCharMovedOnto != wallSymbol /*&& isPlayerTakeKey*/)
         {
             row++;
         }
