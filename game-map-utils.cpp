@@ -17,7 +17,39 @@ void drawMaze(const std::array<std::array<char, mazeColumns>, mazeRows> &maze)
         for (int column = 0; column < mazeColumns; column++)
         {
             char ch = maze[row][column];
-            printCharToTerminalWindow(column, row, ch);
+            if (ch == wallSymbol) {
+                printCharToTerminalWindow(column, row, ACS_BLOCK | COLOR_PAIR(8) );
+            }
+
+            if (ch == emptySymbol) {
+                printCharToTerminalWindow(column, row, emptySymbol | COLOR_PAIR(1) );
+            }
+
+            if (ch == characterSymbol) {
+                printCharToTerminalWindow(column, row, characterSymbol | COLOR_PAIR(3) );
+            }
+
+            if (ch == exitSymbol) {
+                printCharToTerminalWindow(column, row, ACS_PI | COLOR_PAIR(6) );
+            }
+
+            if (ch == keySymbol) {
+                printCharToTerminalWindow(column, row, keySymbol | COLOR_PAIR(4) );
+            }
+
+            if (ch == scoreSymbol1) {
+                printCharToTerminalWindow(column, row, ACS_DIAMOND | COLOR_PAIR(5) );
+            }
+
+            if (ch == scoreSymbol2) {
+                printCharToTerminalWindow(column, row, ACS_DIAMOND | COLOR_PAIR(7) );
+            }
+
+            if (ch == scoreSymbol3) {
+                printCharToTerminalWindow(column, row, ACS_DIAMOND | COLOR_PAIR(8) );
+            }
+
+
 //            std::cout << ch;
         }
 //        std::cout << std::endl;
