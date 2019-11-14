@@ -8,6 +8,7 @@
 #include "game-map-utils.h"
 
 #include "curses-helper-utils.h"
+#include "random-utils.cpp"
 
 bool isPlayerTakeKey = false;
 #include "random-utils.h"
@@ -174,6 +175,9 @@ void generateMaze(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
     // Place character
     placeCharRandomly(prMaze, characterSymbol, 1);
     placeCharRandomly(prMaze, keySymbol, 1);
+    placeCharRandomly(prMaze, scoreSymbol1, 25);
+    placeCharRandomly(prMaze, scoreSymbol2, 10);
+    placeCharRandomly(prMaze, scoreSymbol3, 3);
 }
 
 // Moves character according to given command and retuns eaten symbol (if any)
@@ -249,7 +253,7 @@ void gameMessage(const std::string& message)
 // Moves character and check if exit was found as a result of that move.
 // Parameters:
 //      prMaze - reference to maze field; will be modified while player moves.
-bool moveCharacterAndCheckIfExitFound(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze)
+bool moveCharacterAndCheckIfExitFound(std::array<std::array<char, mazeColumns>, mazeRows> &prMaze, int &score)
 {
     bool rExitFound = false;
     int charRow = 1;
@@ -280,6 +284,19 @@ bool moveCharacterAndCheckIfExitFound(std::array<std::array<char, mazeColumns>, 
         {
             isPlayerTakeKey = true;
         }
+        switch (charMovedOnto){
+        case scoreSymbol1 :
+            score+=10;
+                    break;
+        case scoreSymbol2 :
+            score+=25;
+            break;
+        case scoreSymbol3 :
+            score+=50;
+            break;
+        }
+
+        score--;
     }
 
     else
@@ -293,6 +310,8 @@ bool moveCharacterAndCheckIfExitFound(std::array<std::array<char, mazeColumns>, 
 // Executes one round of the game
 void playMazeGame()
 {
+
+    int score{0};
     std::cout << "LETS START!" << std::endl;
 
     std::array<std::array<char, mazeColumns>, mazeRows> maze;
@@ -303,7 +322,7 @@ void playMazeGame()
         drawMaze(maze);
         applyChangesToTerminalWindow();
     }
-    while (!moveCharacterAndCheckIfExitFound(maze));
+    while (!moveCharacterAndCheckIfExitFound(maze, score));
 }
 
 int main()
